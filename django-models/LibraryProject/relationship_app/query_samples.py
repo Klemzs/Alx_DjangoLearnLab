@@ -54,6 +54,8 @@ for book in library.books.all():
 
 print("\n3. Librarian for Central Library:")
 # Query 3: Librarian for a library
-librarian = Librarian.objects.get(library__name="Central Library")
+library_name = "Central Library"
+library = Library.objects.get(name=library_name)
+librarian = Librarian.objects.get(library=library)
 print(f" - {librarian.name}")
 
