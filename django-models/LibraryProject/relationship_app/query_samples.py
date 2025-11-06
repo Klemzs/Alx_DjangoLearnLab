@@ -30,7 +30,7 @@ def create_data():
     
     # Create library and add books
     library = Library.objects.create(name="Central Library")
-    library.book.add(book1, book2, book3)
+    library.books.add(book1, book2, book3)
     
     # Create librarian
     Librarian.objects.create(name="John Doe", library=library)
@@ -46,7 +46,7 @@ for book in books:
 print("\n2. All books in Central Library:")
 # Query 2: All books in a library
 library = Library.objects.get(name="Central Library")
-for book in library.book.all():
+for book in library.books.all():
     print(f" - {book.title}")
 
 print("\n3. Librarian for Central Library:")
