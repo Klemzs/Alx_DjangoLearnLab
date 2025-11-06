@@ -46,7 +46,7 @@ for book in books:
 print("\n2. All books in Central Library:")
 # Query 2: All books in a library
 library_name = "Central Library"
-library = Library.objects.get(name= library_name)
+library = Library.objects.get(name=library_name)
 for book in library.books.all():
     print(f" - {book.title}")
 
