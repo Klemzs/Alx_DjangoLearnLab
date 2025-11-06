@@ -39,7 +39,9 @@ create_data()
 
 # Query 1: All books by specific author
 print("1. All books by J.K. Rowling:")
-books = Book.objects.filter(author__name="J.K. Rowling")
+author_name = "J.K. Rowling"
+author = Author.objects.get(name=author_name)
+books = Book.objects.filter(author=author)
 for book in books:
     print(f" - {book.title}")
 
