@@ -1,13 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.views.generic import DetailView
-from .models import Author, Book, Library, Librarian
+from .models import Library, Book
 
-# Create your views here.
-def book_list(request):
+def list_books(request):
     books = Book.objects.all().order_by('title')
-
-    return render(request, 'relationship_app/list_books.html', {'books':books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
     model = Library
