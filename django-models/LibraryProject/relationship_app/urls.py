@@ -6,9 +6,9 @@ from . import views
 urlpatterns = [
     
     # Custom permission URLs
-    path('books/add/', views.add_book, name='add_book'),
-    path('books/<int:book_id>/edit/', views.edit_book, name='edit_book'),
-    path('books/<int:book_id>/delete/', views.delete_book, name='delete_book'),
+    path('add_book/', views.add_book, name='add_book'),
+    path('edit_book/<int:book_id>/', views.edit_book, name='edit_book'),
+    path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
 
     # Authentication URLs
     path('login/', auth_views.LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
