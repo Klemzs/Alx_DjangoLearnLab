@@ -15,7 +15,7 @@
 <body>
     <h1>📖 Librarian Dashboard</h1>
     <p>Welcome, {{ user.username }}! You have <strong>Librarian</strong> privileges.</p>
-    
+
     <div class="librarian-features">
         <h2>Librarian Features:</h2>
         <ul class="feature-list">
@@ -26,7 +26,7 @@
             <li>✅ View member activities</li>
         </ul>
     </div>
-    
+
     <div class="nav-links">
         <a href="{% url 'book_list' %}">📚 View All Books</a> |
         <a href="{% url 'member_view' %}">👤 Member Area</a>
