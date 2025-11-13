@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from .forms import ExampleForm
 from .models import Book
 
 # View to create new book - requires can_create permission
@@ -8,12 +9,13 @@ from .models import Book
 @permission_required('bookshelf.can_create', raise_exception=True)
 def book_create(request):
     if request.method == 'POST':
-        # Simple creation without form
-        title = request.POST.get('title')
-        author = request.POST.get('author')
-        publication_year = request.POST.get('publication_year')
-        
-        if title and author and publication_year:
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # SECURE: Using validated and cleaned form data
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            publication_year = form.cleaned_data['publication_year']
+            
             Book.objects.create(
                 title=title,
                 author=author,
@@ -22,27 +24,40 @@ def book_create(request):
             messages.success(request, 'Book created successfully!')
             return redirect('book_list')
         else:
-            messages.error(request, 'Please fill all fields.')
-    
-    return render(request, 'bookshelf/book_create.html')  # Different template
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = ExampleForm()
+
+    return render(request, 'bookshelf/book_create.html', {'form': form})
 
 # View to edit existing book - requires can_edit permission
 @login_required
 @permission_required('bookshelf.can_edit', raise_exception=True)
 def book_edit(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    
+
     if request.method == 'POST':
-        # Simple update without form
-        book.title = request.POST.get('title')
-        book.author = request.POST.get('author')
-        book.publication_year = request.POST.get('publication_year')
-        book.save()
-        
-        messages.success(request, 'Book updated successfully!')
-        return redirect('book_detail', pk=book.pk)
-    
-    return render(request, 'bookshelf/book_edit.html', {'book': book})  # Different template
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # SECURE: Using validated and cleaned form data
+            book.title = form.cleaned_data['title']
+            book.author = form.cleaned_data['author']
+            book.publication_year = form.cleaned_data['publication_year']
+            book.save()
+
+            messages.success(request, 'Book updated successfully!')
+            return redirect('book_detail', pk=book.pk)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        # Pre-populate form with existing book data
+        form = ExampleForm(initial={
+            'title': book.title,
+            'author': book.author,
+            'publication_year': book.publication_year
+        })
+
+    return render(request, 'bookshelf/book_edit.html', {'form': form, 'book': book})
 
 # Book list view - requires can_view permission
 @login_required
