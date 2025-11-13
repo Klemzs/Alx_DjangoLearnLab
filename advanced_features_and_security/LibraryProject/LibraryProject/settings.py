@@ -165,6 +165,8 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # SECURITY: Enforce HTTPS for cookies (set to True in production)
 CSRF_COOKIE_SECURE = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # SECURITY: Enforce HTTPS for session cookies (set to True in production)
 SESSION_COOKIE_SECURE = True
 
