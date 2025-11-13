@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Form</title>
+</head>
+<body>
+    <h2>{% if book %}Edit Book{% else %}Create New Book{% endif %}</h2>
+    
+    <!-- Using Django Form with automatic CSRF protection -->
+    <form method="post">
+        {% csrf_token %}  <!-- CSRF token for protection -->
+        
+        <!-- Form fields rendered securely with automatic escaping -->
+        {{ form.as_p }}
+        
+        <button type="submit">{% if book %}Update Book{% else %}Create Book{% endif %}</button>
+        <a href="{% url 'book_list' %}">Cancel</a>
+    </form>
+</body>
+</html>
