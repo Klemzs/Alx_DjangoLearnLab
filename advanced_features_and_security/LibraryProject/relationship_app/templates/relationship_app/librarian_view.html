@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Librarian Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #007bff; }
+        .librarian-features { background: #d1ecf1; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .feature-list { list-style-type: none; padding: 0; }
+        .feature-list li { padding: 10px; margin: 5px 0; background: white; border-radius: 3px; }
+        .nav-links { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📖 Librarian Dashboard</h1>
+    <p>Welcome, {{ user.username }}! You have <strong>Librarian</strong> privileges.</p>
+
+    <div class="librarian-features">
+        <h2>Librarian Features:</h2>
+        <ul class="feature-list">
+            <li>✅ Manage book inventory</li>
+            <li>✅ Process book checkouts/returns</li>
+            <li>✅ Help members find books</li>
+            <li>✅ Update book information</li>
+            <li>✅ View member activities</li>
+        </ul>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'book_list' %}">📚 View All Books</a> |
+        <a href="{% url 'member_view' %}">👤 Member Area</a>
+    </div>
+</body>
+</html>

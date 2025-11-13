@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #28a745; }
+        .member-features { background: #d4edda; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .feature-list { list-style-type: none; padding: 0; }
+        .feature-list li { padding: 10px; margin: 5px 0; background: white; border-radius: 3px; }
+        .nav-links { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>👤 Member Dashboard</h1>
+    <p>Welcome, {{ user.username }}! You have <strong>Member</strong> privileges.</p>
+    
+    <div class="member-features">
+        <h2>Member Features:</h2>
+        <ul class="feature-list">
+            <li>✅ Browse and search books</li>
+            <li>✅ Check out books</li>
+            <li>✅ View borrowing history</li>
+            <li>✅ Reserve books</li>
+            <li>✅ Update personal preferences</li>
+        </ul>
+    </div>
+    
+    <div class="nav-links">
+        <a href="{% url 'book_list' %}">📚 Browse All Books</a>
+    </div>
+</body>
+</html>

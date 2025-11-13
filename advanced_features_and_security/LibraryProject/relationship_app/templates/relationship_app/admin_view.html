@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #dc3545; }
+        .admin-features { background: #f8d7da; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .feature-list { list-style-type: none; padding: 0; }
+        .feature-list li { padding: 10px; margin: 5px 0; background: white; border-radius: 3px; }
+        .nav-links { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🔐 Admin Dashboard</h1>
+    <p>Welcome, {{ user.username }}! You have <strong>Admin</strong> privileges.</p>
+    
+    <div class="admin-features">
+        <h2>Admin Features:</h2>
+        <ul class="feature-list">
+            <li>✅ Manage all users and their roles</li>
+            <li>✅ Add/remove librarians</li>
+            <li>✅ View system statistics</li>
+            <li>✅ Manage library settings</li>
+            <li>✅ Access all restricted areas</li>
+        </ul>
+    </div>
+    
+    <div class="nav-links">
+        <a href="{% url 'book_list' %}">📚 View All Books</a> |
+        <a href="{% url 'librarian_view' %}">👨‍💼 Librarian Area</a> |
+        <a href="{% url 'member_view' %}">👤 Member Area</a>
+    </div>
+</body>
+</html>
