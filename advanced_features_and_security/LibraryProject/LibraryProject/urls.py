@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
      # Function-based view URL pattern
     path('relationship/', include('relationship_app.urls')),
+      # book users URLs
+    path('', include('bookshelf.urls')),
 ]
