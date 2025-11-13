@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'csp',
     'bookshelf',
     'relationship_app'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'csp.middleware.CSPMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -156,3 +158,11 @@ SESSION_COOKIE_SECURE = True
 SECURE_HEADERS = {
     'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'",
 }
+
+# Content Security Policy settings to prevent XSS attacks
+CSP_DEFAULT_SRC = ["'self'"]  # Only allow content from same origin
+CSP_SCRIPT_SRC = ["'self'"]   # Only allow scripts from same origin
+CSP_STYLE_SRC = ["'self'"]    # Only allow CSS from same origin
+CSP_IMG_SRC = ["'self'"]      # Only allow images from same origin
+CSP_FONT_SRC = ["'self'"]     # Only allow fonts from same origin
+CSP_OBJECT_SRC = ["'none'"]   # Block all plugins (Flash, Java, etc.)
