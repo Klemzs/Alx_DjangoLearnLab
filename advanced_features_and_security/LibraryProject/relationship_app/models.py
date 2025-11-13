@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 # BaseUserManager
-class CustomUserManager(BaseUserManager):
+"""class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not username:
             raise ValueError('Username must be set')
@@ -46,8 +46,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.username
-
+        return self.username""" 
 
 # Create your models here.
 class Author(models.Model):
@@ -91,14 +90,14 @@ class UserProfile(models.Model):
         ('Member', 'Member'),
     ]
 
-    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Member')
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
 # Signal to automatically create UserProfile when a new User is created
-@receiver(post_save, sender=CustomUser)
+"""@receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
@@ -106,4 +105,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=CustomUser)
 def save_user_profile(sender, instance, **kwargs):
     if hasattr(instance, 'profile'):
-        instance.profile.save()
+        instance.profile.save() """

@@ -117,7 +117,8 @@ LOGIN_REDIRECT_URL = '/relationship/books/'
 LOGOUT_REDIRECT_URL = '/relationship/books/'
 
 # CustomUser
-AUTH_USER_MODEL = 'relationship_app.CustomUser'
+# AUTH_USER_MODEL = 'relationship_app.CustomUser'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 
 # Static files (CSS, JavaScript, Images)
