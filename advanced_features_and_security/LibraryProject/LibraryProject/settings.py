@@ -138,6 +138,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SECURITY SETTINGS CONFIGURATION
 # ============================================================================
 
+# SECURE_SSL_REDIRECT: Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# SECURE_HSTS_SECONDS: Enable HTTP Strict Transport Security for 1 year
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+
+# SECURE_HSTS_INCLUDE_SUBDOMAINS: Apply HSTS to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# SECURE_HSTS_PRELOAD: Allow inclusion in browser preload lists
+SECURE_HSTS_PRELOAD = True
+
+# Additional security headers
+SECURE_REFERRER_POLICY = 'same-origin'  # Control referrer information
+
 # SECURITY: Browser-side protections against XSS attacks
 SECURE_BROWSER_XSS_FILTER = True
 
