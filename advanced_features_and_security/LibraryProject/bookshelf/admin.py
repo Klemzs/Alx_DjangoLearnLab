@@ -24,7 +24,9 @@ class CustomUserAdmin(admin.ModelAdmin):
             'fields': (
                 'is_active',
                 'is_staff',
-                'is_superuser'
+                'is_superuser',
+                'groups',
+                'user_permissions',
             )
         }),
         ('Important Dates', {
