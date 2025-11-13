@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1v#sax*(u_^y63#fy^^u)!$ct9op!mp=f8m_(7bm88rg5@fh3&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -130,3 +130,29 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ============================================================================
+# SECURITY SETTINGS CONFIGURATION
+# ============================================================================
+
+# SECURITY: Browser-side protections against XSS attacks
+SECURE_BROWSER_XSS_FILTER = True
+
+# SECURITY: Prevent clickjacking by denying frame embedding
+X_FRAME_OPTIONS = 'DENY'
+
+# SECURITY: Prevent MIME type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# SECURITY: Enforce HTTPS for cookies (set to True in production)
+CSRF_COOKIE_SECURE = True
+
+# SECURITY: Enforce HTTPS for session cookies (set to True in production)
+SESSION_COOKIE_SECURE = True
+
+# SECURITY: Basic Content Security Policy implementation
+# Note: For full CSP, consider using django-csp package
+SECURE_HEADERS = {
+    'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'",
+}
