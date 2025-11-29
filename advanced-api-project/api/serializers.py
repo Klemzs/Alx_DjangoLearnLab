@@ -4,8 +4,8 @@ from .models import Author, Book
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Author
-        field = '__all__'  # Serializes all fields of the Book model
+        model = Book
+        fields = '__all__'  # Serializes all fields of the Book model
 
     def validate_publication_year(self, value):
         """

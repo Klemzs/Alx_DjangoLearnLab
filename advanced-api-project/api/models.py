@@ -6,6 +6,6 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length = 200)
-    publication_year = models.IntegerField
+    publication_year = models.IntegerField(null=True, blank=True)
     author = models.ForeignKey(Author, on_delete = models.CASCADE, related_name = 'books')
 
