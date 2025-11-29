@@ -32,7 +32,7 @@ class BookAPITestCase(TestCase):
         self.assertEqual(response.data['publication_year'], 1980)
 
     def test_create_book_authenticated(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='ClementOdeh', password='123456789')
         data = {
             'title': 'Surrounded by Idiots',
             'publication_year': 2012,
@@ -55,7 +55,7 @@ class BookAPITestCase(TestCase):
 
     def test_update_book_authenticated(self):
         """Test updating a book with authentication"""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='ClementOdeh', password='123456789')
         data = {
             'title': 'The Art of Public Speaking',
             'publication_year': 2021,
@@ -76,7 +76,7 @@ class BookAPITestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_book_authenticated(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='ClementOdeh', password='123456789')
         response = self.client.delete(f'/api/books/{self.book.id}/delete/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Book.objects.count(), 0)
@@ -87,7 +87,7 @@ class BookAPITestCase(TestCase):
         self.assertEqual(Book.objects.count(), 1)
 
     def test_publication_year_validation(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='ClementOdeh', password='123456789')
         data = {
             'title': 'My Author Biography',
             'publication_year': 2030,  # Future year
