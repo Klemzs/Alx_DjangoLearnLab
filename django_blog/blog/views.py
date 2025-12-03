@@ -8,29 +8,27 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import Post, Comment
+from .forms import CommentForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']
-
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
-    fields = ['content']  # Django creates form automatically
-
+    form_class = CommentForm
+    template_name = 'blog/post_comment_detail.html'
+    
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.post_id = self.kwargs['post_id']
         return super().form_valid(form)
-
+    
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.kwargs['post_id']})
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
-    fields = ['content']  # Django creates form automatically
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
     
     def test_func(self):
         comment = self.get_object()
@@ -41,6 +39,7 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
     
     def test_func(self):
         comment = self.get_object()
@@ -48,6 +47,7 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.pk})
+
 
 # ListView to display all blog posts
 class PostListView(ListView):
