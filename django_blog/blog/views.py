@@ -7,9 +7,14 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from django.contrib import messages
 from django.urls import reverse_lazy
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 # ListView to display all blog posts
 class PostListView(ListView):
