@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, filters, genericsi
+from rest_framework import viewsets, permissions, filters, generics
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post, Comment
