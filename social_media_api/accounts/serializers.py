@@ -31,6 +31,14 @@ class UserLoginSerializer(serializers.ModelSerializer):
         return token.key
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    following_count = serializers.SerializerMethodField()
+    followers_count = serializers.SerializerMethodField()
     class Meta:
         model = CustomUser
-        fields = ['username','email','bio','profile_picture','followers']
+        fields = ['username','email','bio','profile_picture','followers_count','following_count']
+
+    def get_following_count(self, obj):
+        return obj.following.count()
+
+    def get_followers_count(self, obj):
+        return obj.followers.count()
