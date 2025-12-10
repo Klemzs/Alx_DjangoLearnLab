@@ -1,8 +1,14 @@
-from rest_framework import viewsets, permissions, filters, generics
+from rest_framework import viewsets, permissions, filters, generics,status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Post, Comment
+from django.shortcuts import get_object_or_404
+from .models import Post, Comment, Like
+from notifications.models import Notification
 from .serializers import PostSerializer, CommentSerializer
+from django.contrib.contenttypes.models import ContentType
+
 
 class PostPagination(PageNumberPagination):
     page_size = 10
@@ -26,6 +32,38 @@ class PostViewSet(viewsets.ModelViewSet):
         if search:
             queryset = queryset.filter(title__icontains=search) | queryset.filter(content__icontains=search)
         return queryset
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def like(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+
+        if Like.objects.filter(post=post, user=user).exists():
+            return Response({'detail': 'Already liked'}, status=status.HTTP_400_BAD_REQUEST)
+
+        Like.objects.create(post=post, user=user)
+
+        Notification.objects.create(
+            recipient=post.author,
+            actor=user,
+            verb='liked your post',
+            content_type=ContentType.objects.get_for_model(post),
+            object_id=post.id
+        )
+
+        return Response({'detail': 'Post liked'})
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def unlike(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+
+        like = Like.objects.filter(post=post, user=user).first()
+        if not like:
+            return Response({'detail': 'Not liked'}, status=status.HTTP_400_BAD_REQUEST)
+
+        like.delete()
+        return Response({'detail': 'Post unliked'})
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all().order_by('-created_at')
