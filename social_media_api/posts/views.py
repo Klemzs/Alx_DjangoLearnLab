@@ -37,8 +37,8 @@ class PostViewSet(viewsets.ModelViewSet):
     def like(self, request, pk=None):
         post = get_object_or_404(Post, pk=pk)
         user = request.user
-
-        like, created = Like.objects.get_or_create(user=user, post=post)
+        
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
         
         if not created:
             return Response({'detail': 'Already liked'}, status=status.HTTP_400_BAD_REQUEST)
@@ -52,7 +52,7 @@ class PostViewSet(viewsets.ModelViewSet):
         )
         
         return Response({'detail': 'Post liked'})
-
+    
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def unlike(self, request, pk=None):
         post = get_object_or_404(Post, pk=pk)
