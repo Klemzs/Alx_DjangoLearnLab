@@ -35,14 +35,14 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, pk=None):
-        post = self.get_object()
+        post = get_object_or_404(Post, pk=pk)
         user = request.user
 
-        if Like.objects.filter(post=post, user=user).exists():
+        like, created = Like.objects.get_or_create(user=user, post=post)
+        
+        if not created:
             return Response({'detail': 'Already liked'}, status=status.HTTP_400_BAD_REQUEST)
-
-        Like.objects.create(post=post, user=user)
-
+        
         Notification.objects.create(
             recipient=post.author,
             actor=user,
@@ -50,18 +50,18 @@ class PostViewSet(viewsets.ModelViewSet):
             content_type=ContentType.objects.get_for_model(post),
             object_id=post.id
         )
-
+        
         return Response({'detail': 'Post liked'})
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def unlike(self, request, pk=None):
-        post = self.get_object()
+        post = get_object_or_404(Post, pk=pk)
         user = request.user
-
-        like = Like.objects.filter(post=post, user=user).first()
+        
+        like = Like.objects.filter(user=user, post=post).first()
         if not like:
             return Response({'detail': 'Not liked'}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         like.delete()
         return Response({'detail': 'Post unliked'})
 
